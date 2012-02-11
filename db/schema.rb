@@ -14,14 +14,16 @@
 ActiveRecord::Schema.define(:version => 20120211021158) do
 
   create_table "articles", :force => true do |t|
+    t.integer  "item_num"
     t.string   "url"
     t.string   "title"
     t.string   "state"
-    t.string   "when_added"
+    t.time     "time_added"
+    t.time     "time_updated"
     t.integer  "source_id"
     t.integer  "user_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "sources", :force => true do |t|

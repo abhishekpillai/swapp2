@@ -3,9 +3,9 @@
 <p># Read: <%= @stats["count_read"] %><p>
 <p># Unread: <%= @stats["count_unread"] %><p>
 <ol>
-<% @list.each do |article| %>
-	<li>Title: <%= link_to article[1]["title"], article[1]["url"] %> --- 
-		Status: <% if article[1]["state"] == "1" %>
+<% @articles.each do |article| %>
+	<li>Title: <%= link_to article.title, article.url %> --- 
+		Status: <% if article.state == "1" %>
 					Read
 				<% else %>
 					Unread

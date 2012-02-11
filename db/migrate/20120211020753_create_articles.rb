@@ -1,11 +1,12 @@
 class CreateArticles < ActiveRecord::Migration
   def change
     create_table :articles do |t|
+      t.integer :item_num
       t.string :url
       t.string :title
       t.string :state
       t.time :time_added
-      t.time :time_changed
+      t.time :time_updated
       t.integer :source_id
       t.integer :user_id
 

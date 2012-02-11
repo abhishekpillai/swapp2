@@ -1,18 +1,26 @@
 require 'json'
 require 'open-uri'
 
-before_filter :json_data
-
-def json_data
-  
-  @article = Article.new  
-  
-  @article  = JSON.parse(open("https://readitlaterlist.com/v2/get?username=name&password=123&apikey=e7ad2l8bTg2d4g4459A4d07Obdg7QKMn").read)["list"]
-  @stats = JSON.parse(open("https://readitlaterlist.com/v2/stats?username=name&password=123&apikey=e7ad2l8bTg2d4g4459A4d07Obdg7QKMn").read)
-  
-end
-
 class ArticlesController < ApplicationController
+  
+  before_filter :json_data
+
+  def json_data
+    list  = JSON.parse(open("https://readitlaterlist.com/v2/get?username=apillai&password=windiciti&apikey=e7ad2l8bTg2d4g4459A4d07Obdg7QKMn").read)["list"]
+    @stats = JSON.parse(open("https://readitlaterlist.com/v2/stats?username=apillai&password=windiciti&apikey=e7ad2l8bTg2d4g4459A4d07Obdg7QKMn").read)
+
+    list.each do |article|
+      @article = Article.new
+      @article.item_num = article[1]["item_id"]
+      @article.title = article[1]["title"]
+      @article.url = article[1]["url"]
+      @article.time_added = article[1]["time_added"]
+      @article.time_updated = article[1]["time_updated"]
+      @article.state = article[1]["state"]
+      @article.save
+    end
+  end
+  
   # GET /articles
   # GET /articles.json
   def index
