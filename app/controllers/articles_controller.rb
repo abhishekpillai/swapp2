@@ -1,13 +1,22 @@
 require 'json'
 require 'open-uri'
 
+before_filter :json_data
+
+def json_data
+  
+  @article = Article.new  
+  
+  @article  = JSON.parse(open("https://readitlaterlist.com/v2/get?username=name&password=123&apikey=e7ad2l8bTg2d4g4459A4d07Obdg7QKMn").read)["list"]
+  @stats = JSON.parse(open("https://readitlaterlist.com/v2/stats?username=name&password=123&apikey=e7ad2l8bTg2d4g4459A4d07Obdg7QKMn").read)
+  
+end
+
 class ArticlesController < ApplicationController
   # GET /articles
   # GET /articles.json
   def index
     @articles = Article.all
-    @list = JSON.parse(open("https://readitlaterlist.com/v2/get?username=name&password=123&apikey=e7ad2l8bTg2d4g4459A4d07Obdg7QKMn").read)["list"]
-    @stats = JSON.parse(open("https://readitlaterlist.com/v2/stats?username=name&password=123&apikey=e7ad2l8bTg2d4g4459A4d07Obdg7QKMn").read)
     
     respond_to do |format|
       format.html # index.html.erb

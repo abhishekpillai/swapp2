@@ -4,7 +4,8 @@ class CreateArticles < ActiveRecord::Migration
       t.string :url
       t.string :title
       t.string :state
-      t.string :when_added
+      t.time :time_added
+      t.time :time_changed
       t.integer :source_id
       t.integer :user_id
 
