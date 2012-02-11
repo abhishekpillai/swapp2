@@ -1,33 +1,14 @@
 <h1>Listing articles</h1>
-
-<table>
-  <tr>
-    <th>Url</th>
-    <th>Title</th>
-    <th>State</th>
-    <th>When added</th>
-    <th>Source</th>
-    <th>User</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @articles.each do |article| %>
-  <tr>
-    <td><%= article.url %></td>
-    <td><%= article.title %></td>
-    <td><%= article.state %></td>
-    <td><%= article.when_added %></td>
-    <td><%= article.source_id %></td>
-    <td><%= article.user_id %></td>
-    <td><%= link_to 'Show', article %></td>
-    <td><%= link_to 'Edit', edit_article_path(article) %></td>
-    <td><%= link_to 'Destroy', article, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
+<p>Total: <%= @stats["count_list"] %><p>
+<p># Read: <%= @stats["count_read"] %><p>
+<p># Unread: <%= @stats["count_unread"] %><p>
+<ol>
+<% @list.each do |article| %>
+	<li>Title: <%= link_to article[1]["title"], article[1]["url"] %> --- 
+		Status: <% if article[1]["state"] == "1" %>
+					Read
+				<% else %>
+					Unread
+				<% end %></li>
 <% end %>
-</table>
-
-<br />
-
-<%= link_to 'New Article', new_article_path %>
+</ol>
