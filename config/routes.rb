@@ -2,7 +2,9 @@ Swapp::Application.routes.draw do
   resources :sources
 
   resources :articles
-
+  
+  get 'users/login' => 'users#login', :as => :login
+  get 'users/logout' => 'users#logout'
   resources :users
   
   resources :genres

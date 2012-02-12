@@ -6,10 +6,7 @@ class UsersController < ApplicationController
   # GET /users.json
   
   def index
-    @users = User.all
-
-    @list = JSON.parse(open("https://readitlaterlist.com/v2/get?username=rv297205&password=jperalta2&apikey=e7ad2l8bTg2d4g4459A4d07Obdg7QKMn").read)["list"]
-    
+    @users = User.all    
     # raise @list.inspect
 
     respond_to do |format|
@@ -18,11 +15,22 @@ class UsersController < ApplicationController
     end
   end
 
+  def login
+    @user = User.find_by_user_name params[:user_name]
+    session[:current_user_id] = @user.id
+    respond_to do |format|
+      format.html { redirect_to articles_url, notice: 'User was successfully created.'}
+      format.json { render json: @user }
+    end
+  end
+  
+  def logout
+    reset_session
+    redirect_to new_user_url
+  end
   # GET /users/1
   # GET /users/1.json
   def show
-    @user = User.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @user }
@@ -49,10 +57,10 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @user = User.new(params[:user])
-
+    
     respond_to do |format|
       if @user.save
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
+        format.html { redirect_to articles_url, notice: 'User was successfully created.' }
         format.json { render json: @user, status: :created, location: @user }
       else
         format.html { render action: "new" }

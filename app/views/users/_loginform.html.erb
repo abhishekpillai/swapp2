@@ -1,0 +1,12 @@
+<%= form_tag login_url, :method => 'get' do %>
+  <p>
+	  <div class="field">
+	    <%= label_tag :user_name %>: <%= text_field_tag :user_name, params[:user_name] %>
+	  </div>
+	  <div class="field">
+	    <%= label_tag :password %>: <%= password_field_tag :password, params[:password] %>
+	  </div>
+	
+    <%= submit_tag "Log in" %>
+  </p>
+<% end %>
