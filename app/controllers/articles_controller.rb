@@ -6,9 +6,10 @@ class ArticlesController < ApplicationController
   before_filter :json_data
 
   def json_data
-    list  = JSON.parse(open("https://readitlaterlist.com/v2/get?username=apillai&password=windiciti&apikey=e7ad2l8bTg2d4g4459A4d07Obdg7QKMn").read)["list"]
-    @stats = JSON.parse(open("https://readitlaterlist.com/v2/stats?username=apillai&password=windiciti&apikey=e7ad2l8bTg2d4g4459A4d07Obdg7QKMn").read)
-
+    @user = User.find session[:current_user_id]
+    list  = JSON.parse(open("https://readitlaterlist.com/v2/get?username=#{@user.user_name}&password=#{@user.password}&apikey=e7ad2l8bTg2d4g4459A4d07Obdg7QKMn").read)["list"]
+    @stats = JSON.parse(open("https://readitlaterlist.com/v2/stats?username=#{@user.user_name}&password=#{@user.password}&apikey=e7ad2l8bTg2d4g4459A4d07Obdg7QKMn").read)
+    
     list.each do |article|
       @article = Article.new
       @article.item_num = article[1]["item_id"]
@@ -17,6 +18,7 @@ class ArticlesController < ApplicationController
       @article.time_added = article[1]["time_added"]
       @article.time_updated = article[1]["time_updated"]
       @article.state = article[1]["state"]
+      @article.user_id = @user.id
       @article.save
     end
   end
@@ -24,8 +26,7 @@ class ArticlesController < ApplicationController
   # GET /articles
   # GET /articles.json
   def index
-    @articles = Article.all
-    
+    @articles = Article.find_all_by_user_id @user.id
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @articles }

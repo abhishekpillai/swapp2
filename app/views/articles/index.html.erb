@@ -1,4 +1,5 @@
 <h1>Listing articles</h1>
+<a class="btn btn-primary btn-large" href="/users/logout">Log out</a>
 <p>Total: <%= @stats["count_list"] %><p>
 <p># Read: <%= @stats["count_read"] %><p>
 <p># Unread: <%= @stats["count_unread"] %><p>
@@ -9,6 +10,8 @@
 					Read
 				<% else %>
 					Unread
-				<% end %></li>
+				<% end %>
+				 -- Time: <%= Time.at(article.time_added).strftime("%B %d, %Y %I:%M%p") %>
+				</li>
 <% end %>
 </ol>

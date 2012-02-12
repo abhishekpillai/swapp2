@@ -3,4 +3,6 @@ class Article < ActiveRecord::Base
  belongs_to :user
  
  validates :item_num, :uniqueness => true
+ 
+
 end
