@@ -13,20 +13,21 @@ class ArticlesController < ApplicationController
     
     list.each do |article|
       new_article = Article.new
-      new_article.item_num = article[1]["item_id"]
-      new_article.title = article[1]["title"]
-      new_article.url = article[1]["url"]
-      new_article.time_added = article[1]["time_added"]
-      new_article.time_updated = article[1]["time_updated"]
-      new_article.state = article[1]["state"]
-      new_article.shortlink = URI(article[1]["url"]).host.sub(/^www\./, "")
-      new_article.save
+       new_article.item_num = article[1]["item_id"]
+       new_article.title = article[1]["title"]
+       new_article.url = article[1]["url"]
+       new_article.time_added = article[1]["time_added"]
+       new_article.time_updated = article[1]["time_updated"]
+       new_article.state = article[1]["state"]
+       new_article.shortlink = URI(article[1]["url"]).host.sub(/^www\./, "")
+       new_article.save
     end
   end
   
   # GET /articles
   # GET /articles.json
   def index
+    @genres = Genre.all
     @articles = Article.find_all_by_user_id @user.id
     respond_to do |format|
       format.html # index.html.erb
