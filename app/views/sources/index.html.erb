@@ -3,8 +3,6 @@
 <table>
   <tr>
     <th>Name</th>
-    <th>Genre</th>
-    <th>User</th>
     <th></th>
     <th></th>
     <th></th>
@@ -13,8 +11,6 @@
 <% @sources.each do |source| %>
   <tr>
     <td><%= source.name %></td>
-    <td><%= source.genre %></td>
-    <td><%= source.user_id %></td>
     <td><%= link_to 'Show', source %></td>
     <td><%= link_to 'Edit', edit_source_path(source) %></td>
     <td><%= link_to 'Destroy', source, confirm: 'Are you sure?', method: :delete %></td>

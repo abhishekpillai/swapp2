@@ -1,10 +1,12 @@
 <h1>Listing articles</h1>
 <p>Total: <%= @stats["count_list"] %><p>
-<p># Read: <%= @stats["count_read"] %><p>
-<p># Unread: <%= @stats["count_unread"] %><p>
+<p>Read: #<%= @stats["count_read"] %><p>
+<p>Unread: #<%= @stats["count_unread"] %><p>
+<p><% @ %>
 <ol>
 <% @articles.each do |article| %>
-	<li>Title: <%= link_to article.title, article.url %> --- 
+	<li>Title: <%= link_to article.title, article.url %> ---
+		Short: <%= link_to article.shortlink, article.shortlink %>
 		Status: <% if article.state == "1" %>
 					Read
 				<% else %>

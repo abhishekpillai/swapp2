@@ -1,5 +1,6 @@
 require 'json'
 require 'open-uri'
+require 'uri'
 
 class ArticlesController < ApplicationController
   
@@ -10,14 +11,15 @@ class ArticlesController < ApplicationController
     @stats = JSON.parse(open("https://readitlaterlist.com/v2/stats?username=apillai&password=windiciti&apikey=e7ad2l8bTg2d4g4459A4d07Obdg7QKMn").read)
 
     list.each do |article|
-      @article = Article.new
-      @article.item_num = article[1]["item_id"]
-      @article.title = article[1]["title"]
-      @article.url = article[1]["url"]
-      @article.time_added = article[1]["time_added"]
-      @article.time_updated = article[1]["time_updated"]
-      @article.state = article[1]["state"]
-      @article.save
+      new_article = Article.new
+       new_article.item_num = article[1]["item_id"]
+       new_article.title = article[1]["title"]
+       new_article.url = article[1]["url"]
+       new_article.time_added = article[1]["time_added"]
+       new_article.time_updated = article[1]["time_updated"]
+       new_article.state = article[1]["state"]
+       new_article.shortlink = URI(article[1]["url"]).host.sub(/^www\./, "")
+       new_article.save
     end
   end
   

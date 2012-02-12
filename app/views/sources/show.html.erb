@@ -1,20 +1,11 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b>Name:</b>
-  <%= @source.name %>
-</p>
+<h1><%= @source.name %></h1>
 
-<p>
-  <b>Genre:</b>
-  <%= @source.genre %>
-</p>
-
-<p>
-  <b>User:</b>
-  <%= @source.user_id %>
-</p>
+<% @source.genres.each do |genre| %>
+	Genre: <%= genre.name %>
+<% end %>
 
 
-<%= link_to 'Edit', edit_source_path(@source) %> |
-<%= link_to 'Back', sources_path %>
+<p><%= link_to 'Edit', edit_source_path(@source) %> </p>
+<p><%= link_to 'Back', sources_path %></p>
